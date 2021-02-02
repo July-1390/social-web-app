@@ -4,21 +4,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 class PostsLine extends Component {
-  // state = {
-  //   posts: [],
-  // };
-  // componentDidMount() {
-  //   //go out and grab the data
-  //   axios
-  //     .get("https://jsonplaceholder.typicode.com/posts") //get some data
-  //     .then((res) => {
-  //       this.setState({
-  //         posts: res.data.slice(0, 10),
-  //       });
-  //     });
-  // }
-
   render() {
+    // console.log(this.props.user);
     const { posts } = this.props;
     const postList = posts.length ? (
       posts.map((post) => {
@@ -46,8 +33,17 @@ class PostsLine extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const user = state.login.userDetails;
+  const userPosts = user
+    ? state.posts.filter((p) => p.userId === user._id)
+    : state.posts;
+
+  console.log(user);
+  console.log(state.posts);
+  console.log(userPosts);
   return {
-    posts: state.posts,
+    userDetails: state.login.userDetails,
+    posts: userPosts,
   };
 };
 
